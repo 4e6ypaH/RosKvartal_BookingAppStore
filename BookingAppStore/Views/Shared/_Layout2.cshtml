@@ -7,23 +7,12 @@
 </head>
 
 <body>
+    <h2>Layout2</h2>
     <nav>
         <ul class="menu">
             <li>@Html.ActionLink("Главная", "Index", "Home")</li>
         </ul>
     </nav>
     @RenderBody()
-    @*<footer>@RenderSection("Footer, false")</footer>*@
-
-    <footer>
-        @if (IsSectionDefined("Footer"))
-        {
-            @RenderSection("Footer")
-        }
-        else
-        {
-            <span>Содержание элемента footer по умолчанию.</span>
-        }
-    </footer>
 </body>
 </html>
