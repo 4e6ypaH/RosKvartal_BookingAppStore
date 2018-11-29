@@ -5,6 +5,7 @@
     ViewBag.Title = "Книжный магазин";
 }
 
+<a href="/Home/Create">Создать</a>
 <div>
     <h3>Распродажа книг</h3>
     <table>
@@ -34,14 +35,16 @@
                     <p>@b.Price</p>
                 </td>
                 <td>
-                    <p><a href="/Home/Buy/@b.Id">Купить</a></p>
+                    <p><a href="/Home/Buy/@b.Id">Купить </a>
+                    <a href="/Home/Delete/@b.Id"> Удалить</a>
+                    <a href="/Home/Edit/@b.Id">Изменить</a></p>
                 </td>
             </tr>
         }
     </table>
 </div>
 
-@helper BookList(IEnumerable<Book> books)
+@*@helper BookList(IEnumerable<Book> books)
 {
     <ul>
         @foreach (Book b in books)
@@ -50,14 +53,14 @@
         }
     </ul>
 }
-@*<textarea cols= "20" id = "text" name = "text rows = "2">
+<textarea cols= "20" id = "text" name = "text rows = "2">
       привет, мир!
-    </textarea>*@
+    </textarea>
 
 @using (Html.BeginForm("GetForm", "Home", FormMethod.Post))
 {
 
-    @Html.ListBox("countries", new MultiSelectList(new string[] {"Бразилия", "Аргентина", "Уругвай", "Чили" }))
+    @Html.ListBox("countries", new MultiSelectList(new string[] {"Бразилия", "Аргентина", "Уругвай", "Чили" }))*@
     @*@Html.DropDownList("author", ViewBag.Authors as SelectList)*@
     @*@Html.CheckBox("set", false) <span>Включить</span>*@
     @*@Html.RadioButton("color", "red")
@@ -69,8 +72,8 @@
 
 
         @Html.TextArea("text", "привет, мир!", 5, 50, null)*@
-    <input type="submit" value="Send" />
-}
+    @*<input type="submit" value="Send" />
+}*@
 
 
 @*<h3>Список книг</h3>
@@ -86,7 +89,7 @@
         </ul>
     }*@
 
-@{
+@*@{
     string[] cities = new string[] { "Лондон", "Париж", "Москва" };
 }
 @{
@@ -96,7 +99,7 @@
 @using BookingAppStore.Helpers
 @Html.CreateList(cities)
 
-@ListHelper.CreateList(Html, countries)
+@ListHelper.CreateList(Html, countries)*@
 
 @*<h3>Города</h3>
     @CreateList(cities)

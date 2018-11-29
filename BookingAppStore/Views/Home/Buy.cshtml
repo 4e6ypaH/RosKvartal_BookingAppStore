@@ -12,12 +12,12 @@
         <table>
             <tr>
                 <td><p>@Html.LabelFor(m => m.Person, "Введите имя")</p></td>
-                <td>@Html.TextBoxFor(m=>m.Person)</td>
+                <td>@Html.EditorFor(m=>m.Person)</td>
             </tr>
             <tr>
                 <td><p>@Html.Label("Address", "Введите адрес")</p></td>
                 <td>
-                    @Html.TextBoxFor(m=>m.Adress)
+                    @Html.EditorFor(m=>m.Adress)
                 </td>
             </tr>
             <tr>

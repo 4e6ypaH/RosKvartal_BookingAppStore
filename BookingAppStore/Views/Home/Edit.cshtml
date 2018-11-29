@@ -1,0 +1,32 @@
+﻿@model BookingAppStore.Models.Book
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Книга №@Model.Id</h2>
+
+@using (Html.BeginForm())
+{
+<fieldset>
+    @Html.HiddenFor(m => m.Id)
+    <p>
+        @Html.LabelFor(model => model.Name, "Название книги")
+        <br />
+        @Html.EditorFor(model => model.Name)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Author, "Автор")
+        <br />
+        @Html.EditorFor(model => model.Author)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Price, "Цена")
+        <br />
+        @Html.EditorFor(model => model.Price)
+    </p>
+    <input type="submit" value="Добавить" />
+</fieldset>
+}
+
+

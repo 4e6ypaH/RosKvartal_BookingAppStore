@@ -1,6 +1,7 @@
 ﻿using BookingAppStore.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,14 +14,109 @@ namespace BookingAppStore.Controllers
 
         public ActionResult Index()
         {
-            var books = db.Books;
-            ViewBag.Message = "Это частичное представление";
-            //ViewBag.Books = books;
+            //using(BookContext db2 = new BookContext())
+            //{
+            //    var books = db2.Books;
+            //}
 
-            SelectList authors = new SelectList(db.Books, "Author", "Name");
-            ViewBag.Authors = authors;
+            return View(db.Books.ToList());
 
-            return View(books);
+            //var books = db.Books;
+            //ViewBag.Message = "Это частичное представление";
+            ////ViewBag.Books = books;
+
+            //SelectList authors = new SelectList(db.Books, "Author", "Name");
+            //ViewBag.Authors = authors;
+
+            //return View(books);
+        }
+
+        [HttpGet]
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+
+        public ActionResult Create(Book book)
+        {
+            db.Books.Add(book);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        //public ActionResult Delete (int id)
+        //{
+        //    Book b = db.Books.Find(id);
+        //    if (b != null)
+        //    {
+        //        db.Books.Remove(b);
+        //        db.SaveChanges();
+        //    }
+
+        //    //Book b = new Book { Id = id };
+        //    //db.Entry(b).State = EntityState.Deleted;
+        //    //db.SaveChanges();
+
+        //    return RedirectToAction("Index");
+        //}
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            Book b = db.Books.Find(id);
+            if (b == null)
+            {
+                return HttpNotFound();
+            }
+            return View(b);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Book b = db.Books.Find(id);
+            if (b == null)
+            {
+                return HttpNotFound();
+            }
+            db.Books.Remove(b);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Book book = db.Books.Find(id);
+            if (book != null)
+            {
+                return View(book);
+            }
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Book book)
+        {
+            db.Entry(book).State = EntityState.Modified; //UPDATE
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult GetBook(int id)
+        {
+            Book b = db.Books.Find(id);
+            if (b == null)
+                return HttpNotFound();
+            return View(b);
         }
 
         [HttpPost]
@@ -51,8 +147,8 @@ namespace BookingAppStore.Controllers
         public ActionResult Buy(int id)
         {           
             ViewBag.BookId = id;
-            Purchase purchase = new Purchase { BookId = id, Person= "Неизвестно" };
-            return View(purchase);
+            return View(new Purchase { BookId = id, Person= "Неизвестно" });
+
         }
 
         [HttpPost]
