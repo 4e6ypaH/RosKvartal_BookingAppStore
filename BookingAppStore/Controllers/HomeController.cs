@@ -10,15 +10,32 @@ namespace BookingAppStore.Controllers
     public class HomeController : Controller
     {
         BookContext db = new BookContext();
+
         public ActionResult Index()
         {
             var books = db.Books;
             ViewBag.Message = "Это частичное представление";
             //ViewBag.Books = books;
+
+            SelectList authors = new SelectList(db.Books, "Author", "Name");
+            ViewBag.Authors = authors;
+
             return View(books);
         }
 
-        public ActionResult Getlist()
+        [HttpPost]
+        public string GetForm(string [] countries)
+        {
+            string result = "";
+            foreach (string c in countries)
+            {
+                result += c;
+                result += ";";
+            }
+            return "Вы выбрали: " + result;
+        }
+
+            public ActionResult Getlist()
         {
             string[] states = new string[] { "Russia", "USA", "Canada", "France" };
             return PartialView(states);
