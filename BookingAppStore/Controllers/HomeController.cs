@@ -33,6 +33,23 @@ namespace BookingAppStore.Controllers
 
         [HttpGet]
 
+        public ActionResult CreateBook()
+        {
+            return View();
+        }
+
+        [HttpPost]
+
+        public ActionResult CreateBook(Book book)
+        {
+            db.Books.Add(book);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+
         public ActionResult Create()
         {
             return View();
@@ -90,6 +107,29 @@ namespace BookingAppStore.Controllers
 
         [HttpGet]
         public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Book book = db.Books.Find(id);
+            if (book != null)
+            {
+                return View(book);
+            }
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult EditBook(Book book)
+        {
+            db.Entry(book).State = EntityState.Modified; //UPDATE
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult EditBook(int? id)
         {
             if (id == null)
             {
